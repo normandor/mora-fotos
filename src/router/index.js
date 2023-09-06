@@ -6,7 +6,11 @@ import goTo from 'vuetify/es5/services/goto'
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', component: ImageList },
+  { path: '/', 
+    component: () =>
+    import(/* webpackChunkName: "home" */ "../views/HomePage.vue"),
+  },
+  { path: '/photos', component: ImageList },
   {
     path: "/about",
     name: "About",

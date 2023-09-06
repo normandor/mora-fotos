@@ -35,13 +35,63 @@
         :z-index="zIndex"
         :value="overlay"
       >
-      <v-btn
-        class="white--text visible"
-        color="teal"
-        @click="overlay = false"
+      <v-card
+    class="mx-auto my-12"
+    max-width="1024"
+  >
+    <template slot="progress">
+      <v-progress-linear
+        color="deep-purple"
+        height="10"
+        indeterminate
+      ></v-progress-linear>
+    </template>
+
+    <v-img
+      :src="this.selectedPhoto"
+    >
+    <v-btn
+      icon
+      class="visible"
+      style="position:absolute; top:0; right:0;"
+      @click="overlay = false"
+    >
+      <v-icon size="34">mdi-close</v-icon>
+    </v-btn>
+    <v-btn
+      icon
+      @click="nextPhoto"
+      class="visible"
+      style="position:absolute; top:50%; right:0;"
+    >
+      <v-icon size="54">mdi-chevron-right</v-icon>
+    </v-btn>    
+    <v-btn
+      icon
+      @click="previousPhoto"
+      class="visible"
+      style="position:absolute; top:50%; left:0;"
+    >
+     <v-icon size="54">mdi-chevron-left</v-icon>
+    </v-btn>
+  </v-img>
+
+    <v-card-text>
+      <v-row
+        align="center"
+        class="mx-0"
       >
-        Hide Overlay
-      </v-btn>
+
+      </v-row>
+
+      <div class="my-4 text-subtitle-1">
+        Info de la foto (?)
+      </div>
+
+    </v-card-text>
+  </v-card>
+
+
     </v-overlay>
 
     </div>
@@ -56,6 +106,7 @@ export default {
   data: () => ({
       overlay: false,
       zIndex: 10,
+      selectedPhoto: null,
     }),
   computed: {
     ...mapGetters(['allImages']),
@@ -75,11 +126,32 @@ export default {
       alert('Button clicked!')
     },
     maximize(imgUrl) {
+      this.selectedPhoto = imgUrl;
       this.overlay = true;
       // alert(`maximized: ${imgUrl}`)
     },
+    nextPhoto() {
+      let selectedPhotoItem = this.filteredImages.findIndex(image => {
+        return image.url === this.selectedPhoto
+      })
+
+      if (this.filteredImages.length === selectedPhotoItem + 1) {
+        selectedPhotoItem = -1
+      }
+      this.selectedPhoto = this.filteredImages[selectedPhotoItem+1].url
+    },
+    previousPhoto() {
+      let selectedPhotoItem = this.filteredImages.findIndex(image => {
+        return image.url === this.selectedPhoto
+      })
+
+      if (selectedPhotoItem === 0) {
+        selectedPhotoItem = this.filteredImages.length
+      }
+      this.selectedPhoto = this.filteredImages[selectedPhotoItem-1].url
+    },
     addToCart(imgUrl) {
-      alert(`add to cart: ${imgUrl}`)
+      alert(`add to cart: ${imgUrl}`);
     }
   },
   created() {

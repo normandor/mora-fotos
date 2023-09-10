@@ -24,74 +24,76 @@ const actions = {
     
     let images = [
       {
+        id:1,
         url: '1.jpg',
         name: 'photo1',
         date: '2023-09-04',
+        price: 5,
+        currency: 'USD',
+        qty: 1
       },
       {
+        id: 2,
         url: '2.jpg',
         name: 'photo2',
         date: '2023-09-04',
+        price: 5,
+        currency: 'USD',
+        qty: 1
       },
       {
+        id: 3,
         url: '3.jpg',
         name: 'photo3',
         date: '2023-09-03',
+        price: 5,
+        currency: 'USD',
+        qty: 1
       },
       {
+        id: 4,
         url: '4.jpg',
         name: 'photo4',
         date: '2023-09-03',
+        price: 5,
+        currency: 'USD',
+        qty: 1
       },
       {
+        id: 5,
         url: '5.jpg',
         name: 'photo5',
         date: '2023-09-03',
+        price: 5,
+        currency: 'USD',
+        qty: 1
       },
       {
+        id: 6,
         url: '6.jpg',
         name: 'photo6',
         date: '2023-09-02',
+        price: 5,
+        currency: 'USD',
+        qty: 1
       },
       {
+        id: 7,
         url: '7.jpg',
         name: 'photo7',
         date: '2023-09-04',
+        price: 5,
+        currency: 'USD',
+        qty: 1
       },
       {
+        id: 8,
         url: '8.jpg',
         name: 'photo8',
-        date: '2023-09-04',
-      },
-      {
-        url: '9.jpg',
-        name: 'photo9',
         date: '2023-09-03',
-      },
-      {
-        url: '10.jpg',
-        name: 'photo10',
-        date: '2023-09-03',
-      },
-      {
-        url: '11.jpg',
-        name: 'photo11',
-        date: '2023-09-03',
-      },
-      {
-        url: '12.jpg',
-        name: 'photo12',
-        date: '2023-09-02',
-      },
-      {
-        url: '13.jpg',
-        name: 'photo14',
-        date: '2023-09-02',
-      },
-      {
-        url: '14.jpg',
-        name: 'photo14',
-        date: '2023-09-02',
+        price: 5,
+        currency: 'USD',
+        qty: 1
       },
     ];
     

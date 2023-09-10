@@ -10,7 +10,7 @@ const routes = [
     component: () =>
     import(/* webpackChunkName: "home" */ "../views/HomePage.vue"),
   },
-  { path: '/photos', component: ImageList },
+  { path: '/photos-by-day', component: ImageList },
   {
     path: "/about",
     name: "About",
@@ -19,6 +19,12 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/photos",
+    name: "Photos",
+    component: () =>
+      import(/* webpackChunkName: "photos" */ "../views/Photos.vue"),
   },
   {
     path: "/info",
@@ -30,7 +36,18 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: () =>
-      import(/* webpackChunkName: "info" */ "../views/CartView.vue"),
+      import(/* webpackChunkName: "cart" */ "../views/CartView.vue"),
+  },
+  {
+    path: "/lessons",
+    name: "Lessons",
+    component: () =>
+      import(/* webpackChunkName: "lessons" */ "../views/Lessons.vue"),
+  },{
+    path: "/tours",
+    name: "Tours",
+    component: () =>
+      import(/* webpackChunkName: "tours" */ "../views/Tours.vue"),
   },
 ];
 

@@ -4,6 +4,7 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+    <app-footer class="mt-10"/>
   </v-app>
 </template>
 
@@ -34,6 +35,7 @@ export default {
       this.$store.state.task.dueDate = null // format(new Date(), 'yyyy-MM-dd');
       this.date = this.$store.state.task.dueDate
     }
+    this.$store.dispatch('getItems')
   },
   filters: {
     niceDate(value) {
@@ -43,6 +45,7 @@ export default {
   components: {
     'dialog-due-date': require('@/components/Todo/Dialogs/DialogDueDate.vue').default,
     'app-header': require('@/components/AppHeader.vue').default,
+    'app-footer': require('@/components/AppFooter.vue').default,
   }
 }
 </script>

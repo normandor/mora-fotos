@@ -1,4 +1,14 @@
 <template>
+    <v-container class="main-container">
+    <div class="page-title">
+      <h1>SURF PHOTO DAY BY DAY</h1>
+      <h2>Select the day you where surfing and the spot</h2>
+    </div>
+    <p>
+      If you find yourself and would love to<br>
+      download the picture in high resolution,<br>
+      just click on it.
+    </p>
   <div>
     <div class="image-container">
       <!-- <div
@@ -14,7 +24,7 @@
           <v-img class="image" :src="image.url"></v-img>
           <div class="hover-button">
             <v-btn icon elevation="0" style="background-color: rgba(55, 55, 55, 0.75) !important;"
-              :class="{ 'show-btn': hover }" class="grey lighten-4 ml-1 mr-1" @click="addToCart(image.url)">
+              :class="{ 'show-btn': hover }" class="grey lighten-4 ml-1 mr-1" @click="addToCart(image)">
               <v-icon color="white" class="pa-2">
                 mdi-cart-plus
               </v-icon>
@@ -29,23 +39,36 @@
         </v-card>
       </v-hover>
 
-      <v-overlay
-        color="rgba(0,0,0,1)"
-        opacity="0.7"
-        :z-index="zIndex"
-        :value="overlay"
-      >
-      <v-btn
-        class="white--text visible"
-        color="teal"
-        @click="overlay = false"
-      >
-        Hide Overlay
-      </v-btn>
-    </v-overlay>
+      <v-overlay color="rgba(0,0,0,1)" opacity="0.7" :z-index="zIndex" :value="overlay">
+        <v-card class="mx-auto my-12" width="640">
+          <template slot="progress">
+            <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
+          </template>
+
+          <v-img :src="this.selectedPhoto">
+            <v-btn icon class="visible" style="position:absolute; top:0; right:0;" @click="overlay = false">
+              <v-icon size="34">mdi-close</v-icon>
+            </v-btn>
+            <v-btn icon @click="nextPhoto" class="visible" style="position:absolute; top:50%; right:0;">
+              <v-icon size="54">mdi-chevron-right</v-icon>
+            </v-btn>
+            <v-btn icon @click="previousPhoto" class="visible" style="position:absolute; top:50%; left:0;">
+              <v-icon size="54">mdi-chevron-left</v-icon>
+            </v-btn>
+          </v-img>
+
+          <v-card-text>
+            <div class="my-4 text-subtitle-1">
+              Info de la foto (?)
+            </div>
+
+          </v-card-text>
+        </v-card>
+      </v-overlay>
 
     </div>
   </div>
+</v-container>
 </template>
 
 <script>
@@ -54,9 +77,10 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'ImageList',
   data: () => ({
-      overlay: false,
-      zIndex: 10,
-    }),
+    overlay: false,
+    zIndex: 10,
+    selectedPhoto: null
+  }),
   computed: {
     ...mapGetters(['allImages']),
     filteredImages() {
@@ -75,15 +99,39 @@ export default {
       alert('Button clicked!')
     },
     maximize(imgUrl) {
+      this.selectedPhoto = imgUrl;
       this.overlay = true;
-      // alert(`maximized: ${imgUrl}`)
     },
-    addToCart(imgUrl) {
-      alert(`add to cart: ${imgUrl}`)
+    nextPhoto() {
+      let selectedPhotoItem = this.filteredImages.findIndex(image => {
+        return image.url === this.selectedPhoto
+      })
+
+      if (this.filteredImages.length === selectedPhotoItem + 1) {
+        selectedPhotoItem = -1
+      }
+      this.selectedPhoto = this.filteredImages[selectedPhotoItem+1].url
+    },
+    previousPhoto() {
+      let selectedPhotoItem = this.filteredImages.findIndex(image => {
+        return image.url === this.selectedPhoto
+      })
+
+      if (selectedPhotoItem === 0) {
+        selectedPhotoItem = this.filteredImages.length
+      }
+      this.selectedPhoto = this.filteredImages[selectedPhotoItem-1].url
+    },
+    addToCart(image) {
+      this.$store.dispatch('addCartItem', image)
     }
   },
   created() {
     const images = this.fetchImages();
+  },
+  mounted() {
+    this.$store.dispatch('setHeaderImage', '5.jpg')
+    this.$store.dispatch('setCurrentPath', this.$router.currentRoute.path)
   }
 }
 </script>
@@ -122,5 +170,4 @@ export default {
   left: 50%;
   transform: translate(-50%, 0%);
 }
-
 </style>

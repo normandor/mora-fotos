@@ -81,7 +81,7 @@ export default new Vuex.Store({
     setCurrentPath({ commit }, value) {
       commit('setCurrentPath', value)
     },
-    getTasks({ commit }) {
+    getItems({ commit }) {
       db.collection('cart').get().then(items => {
         commit('setCartItems', items)
       });

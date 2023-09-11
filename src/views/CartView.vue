@@ -5,7 +5,7 @@
         <div class="col-12 col-sm-12">
           <div class="cart-title">Shopping Cart ({{ cartCount }} items)</div>
           <hr>
-          <v-content class="container">
+          <v-main class="container">
             <v-container class="bg-surface-variant">
               <v-row class="mb-6" no-gutters>
                 <v-col align="right">
@@ -16,7 +16,7 @@
 
                 <v-col align="center">
                   <v-sheet class="pa-2 ma-2">
-
+                    &nbsp;
                   </v-sheet>
                 </v-col>
 
@@ -54,7 +54,7 @@
 
 
                 <v-col align="center">
-                  <v-sheet class="pa-2 ma-2 float-right" style="white-space: nowrap;">
+                  <v-sheet class="pa-2 ma-2 mr-2 float-right" style="white-space: nowrap;">
                     <v-btn icon @click="removeOneFromItemList(item)">
                       -
                     </v-btn>
@@ -78,7 +78,7 @@
                 </v-col>
               </v-row>
             </v-container>
-          </v-content>
+          </v-main>
 
         </div>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque, quaerat quasi. Aliquam corporis quod suscipit

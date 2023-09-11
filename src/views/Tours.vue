@@ -64,8 +64,7 @@ import FeatureCardTours from '@/components/FeatureCardTours.vue';
 export default {
   components: {
     'price-card': require('@/components/PriceCard.vue').default,
-    'feature-card-tours': require('@/components/FeatureCardTours.vue').default
-    ,
+    'feature-card-tours': require('@/components/FeatureCardTours.vue').default,
   },
   mounted() {
     this.$store.dispatch('setHeaderImage', '4.jpg')

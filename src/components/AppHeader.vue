@@ -1,5 +1,6 @@
 <template>
-  <v-container class="header-container pa-0" >
+  <v-container class="header-container pa-0">
+    <div>
       <transition name="fade">
         <v-img 
           :height="this.$store.state.currentPath != '/cart' ? '700px' : '100px'"
@@ -14,41 +15,29 @@
         style="position:absolute; top:200px; left:50%; transform: translate(-50%);"
         src="logo_mora.png">
       </v-img>
+
+
     <v-app-bar height="100px" :class="{ 'black-bg': scrollPosition > 50 }" flat fixed>
+      <v-app-bar-nav-icon 
+        @click="drawer = true" 
+        class="small-screen-only"
+        color="white"
+        dense
+        >
+      </v-app-bar-nav-icon>
+      
       <v-row class="pt-4 pb-6" align="center">
-        <div :class="this.$store.state.currentPath == '/' ? 'active' : ''" class="header-menu-text ml-4 mr-8"
-          @click="goto('/', $event)">
-          HOME
-        </div>
-
-        <div :class="this.$store.state.currentPath == '/lessons' ? 'active' : ''" @click="goto('/lessons', $event)"
-          class="header-menu-text mr-8">
-          LESSONS
-        </div>
-
-        <div class="header-menu-text mr-8" :class="this.$store.state.currentPath == '/tours' ? 'active' : ''"
-          @click="goto('/tours', $event)">
-          TOURS
-        </div>
-
-        <div :class="this.$store.state.currentPath == '/photos' ? 'active' : ''" class="header-menu-text mr-8"
-          @click="goto('/photos', $event)">
-          PHOTOS & VIDEOS
-        </div>
-
-        <div :class="this.$store.state.currentPath == '/photos-by-day' ? 'active' : ''" class="header-menu-text mr-8"
-          @click="goto('/photos-by-day', $event)">
-          PHOTOS DAY BY DAY
-        </div>
-
-        <div :class="this.$store.state.currentPath == '/info' ? 'active' : ''" class="header-menu-text"
-          @click="goto('/info', $event)">
-          CONTACT
+        <div class="large-screen-only">
+          <div 
+            v-for="item in menuItems" :key="item.url"
+            :class="$store.state.currentPath == item.url ? 'active' : ''"
+            class="header-menu-text ml-4 mr-8"
+            @click="goto(item.url, $event)">
+            {{ item.label }}
+          </div>
         </div>
         <v-spacer />
         <div class="pr-4">
-
-
           <v-btn class="pa-0 ma-0" dark stacked icon @click="goto('/cart')">
             <div>
               <template>
@@ -67,12 +56,70 @@
         </div>
       </v-row>
     </v-app-bar>
+    </div>
+      
+    <v-navigation-drawer
+      width="100%"
+      v-model="drawer"
+      fixed
+      temporary
+      app
+    >
+      <v-list
+        nav
+      >
+        <v-list-item-group
+          class="pt-16"
+        >
+          <v-btn 
+            icon
+            @click="drawer = false"
+            style="position: absolute; right: 10px; top: 10px"
+          
+          >
+            <v-icon>
+              mdi-close
+            </v-icon>
+          </v-btn>
+          <v-list-item v-for="(item) in menuItems" :key="item.url" :to="item.url">
+            <v-list-item-title>{{ item.label }}</v-list-item-title>
+          </v-list-item>
+
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
   </v-container>
 </template>
 
 <script>
 export default {
   data: () => ({
+    menuItems: [
+      {
+        label: 'HOME',
+        url: '/'
+      },
+      {
+        label: 'LESSONS',
+        url: '/lessons'
+      },
+      {
+        label: 'TOURS',
+        url: '/tours'
+      },
+      {
+        label: 'PHOTOS & VIDEOS',
+        url: '/photos'
+      },
+      {
+        label: 'PHOTOS BY DAY',
+        url: '/photos-by-day'
+      },
+      {
+        label: 'CONTACT',
+        url: '/info'
+      },
+    ],
     scrollPosition: null,
     lastEvent: null,
     drawer: false,
@@ -174,4 +221,24 @@ export default {
     transform: scale(1);
   }
 }
+
+.small-screen-only {
+  @media (max-width: 760px) {
+    display: flex;
+  }
+  @media (min-width: 760px) {
+    display: none;
+  }
+}
+
+.large-screen-only {
+  @media (max-width: 760px) {
+    display: none;
+  }
+  @media (min-width: 760px) {
+    display: flex;
+  }
+}
+
+
 </style>

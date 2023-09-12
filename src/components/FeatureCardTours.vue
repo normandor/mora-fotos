@@ -1,16 +1,16 @@
 <template>
   <p class="m-0 p-0">
     <v-card flat rounded="lg" color="#eee" class="pb-6 pt-6">
-      <v-row class="pa-6">
+      <v-row class="pa-4">
         <v-col
           v-for="item in docs"
           :key="item.title"
-          cols="6"
+          cols="12" md="6"
         >
           <div class="feature-title">
             {{ item.title }}
           </div>
-            <div class="feature-text">
+            <div class="feature-text pb-4">
               {{ item.text }}
             </div>
         </v-col>

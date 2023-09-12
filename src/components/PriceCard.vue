@@ -1,6 +1,6 @@
 <template>
   <p class="m-0 p-0">
-    <v-card flat rounded="lg" color="#eee" width="480px" class="pb-6 pt-6">
+    <v-card flat rounded="lg" color="#eee" width="480px" class="pl-4 pr-4 pb-6 pt-6">
       <div class="card-title">
         {{ title }}
       </div>

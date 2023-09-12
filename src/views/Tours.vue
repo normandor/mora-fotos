@@ -11,8 +11,8 @@
     <v-img class="mx-auto full-page-img" src="lessons_1.jpg" />
 
     <h2 class="vertical-margins strong">Prices</h2>
-    <v-row class="p-0 m-0">
-      <v-col class="p-0 m-0">
+    <v-row class="m-0">
+      <v-col cols="12" md="6">
         <price-card
           title="Surf Spot Recommendation"
           subtitle="Driving"
@@ -23,7 +23,7 @@ Photo/Video Session - extra $50
 Surfboard rental - extra $20"
         />
       </v-col>
-      <v-col class="p-0 m-0">
+      <v-col cols="12" md="6">
         <price-card
           title="Surf Spot Recommendation"
           subtitle="Driving - Guiding in the water"
@@ -37,15 +37,15 @@ Surfboard rental - extra $20"
     </v-row>
 
     <p class="mt-10">
-      Even if you know the name of surf spot and<br>
-      have the point on the map it does not mean<br>
-      you could easily find it and surf it. Let us bring<br>
-      you to the best spots and guide you in the water,<br>
+      Even if you know the name of surf spot and
+      have the point on the map it does not mean
+      you could easily find it and surf it. Let us bring
+      you to the best spots and guide you in the water,
       we will make sure you catch as many waves as possible.
     </p>
     <p>
-      If you book a surf tour for more than one person<br>
-      we can arrange everything with you and photo/video<br>
+      If you book a surf tour for more than one person
+      we can arrange everything with you and photo/video
       session in only charge ones.
     </p>
     <h2 class="vertical-margins strong">Why to take surf tour with guiding in the water?</h2>

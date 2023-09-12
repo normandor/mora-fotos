@@ -86,39 +86,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.image-container {
-  column-count: 3;
-  column-gap: 0;
-}
-
-.v-card.v-sheet {
-  max-width: 100%;
-  padding: 5px;
-}
-
-.v-card .v-image {
-  transition: filter .4s ease-in-out;
-}
-
-.v-btn {
-  opacity: 0;
-  transition: opacity .4s ease-in-out;
-}
-
-.visible {
-  opacity: 1;
-}
-
-.show-btn {
-  opacity: 0.7;
-}
-
-.hover-button {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translate(-50%, 0%);
-}
-</style>

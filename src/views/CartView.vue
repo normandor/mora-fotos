@@ -7,46 +7,92 @@
           <hr>
           <v-main class="container">
             <v-container class="bg-surface-variant">
-              <v-row class="mb-6" no-gutters>
+              
+              <div class="small-screen-only">
+              <table width="100%" style="table-layout: fixed">
+                <tr style="color: grey">
+                  <td>
+                    ITEM
+                  </td>
+                  <td>
+                    QTY
+                  </td>
+                  <td>
+                    PRICE
+                  </td>
+                  <td>
+                    TOTAL
+                  </td>
+                </tr>
+                <tr
+                  v-for="item in this.$store.state.cartItems" :key="item.id"
+                >
+                <td>
+                  <img :src="item.url" width="100%">
+                    {{ item.name }}
+                  </td>
+                  <td>
+                    <v-btn icon @click="removeOneFromItemList(item)">
+                      -
+                    </v-btn>
+                    {{ item.qty }}
+                    <v-btn icon @click="addOneToItemList(item)">
+                      +
+                    </v-btn>
+                  </td>
+                  <td>
+                    {{ item.price }}
+                  </td>
+                  <td>
+                    {{ item.price * item.qty }} {{ currency }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+              <v-row class="large-screen-only mb-6" no-gutters>
                 <v-col align="right">
-                  <v-sheet class="pa-2 ma-2">
+                  <v-sheet class="pa-0 ma-0">
                     <div class="grey--text strong">ITEM</div>
                   </v-sheet>
                 </v-col>
 
-                <v-col align="center">
-                  <v-sheet class="pa-2 ma-2">
+                <v-col style="" align="center" class="large-screen-only">
+                  <v-sheet class="pa-0 ma-0">
                     &nbsp;
                   </v-sheet>
                 </v-col>
 
                 <v-col align="center">
-                  <v-sheet class="pa-2 ma-2">
+                  <v-sheet class="pa-0 ma-0">
                     <div class="grey--text strong">QTY</div>
                   </v-sheet>
                 </v-col>
 
                 <v-col align="center">
-                  <v-sheet class="pa-2 ma-2">
+                  <v-sheet class="pa-0 ma-0">
                     <div class="grey--text strong">PRICE</div>
                   </v-sheet>
                 </v-col>
 
                 <v-col align="center">
-                  <v-sheet class="pa-2 ma-2">
+                  <v-sheet class="pa-0 ma-0">
                     <div class="grey--text strong">TOTAL</div>
                   </v-sheet>
                 </v-col>
               </v-row>
 
-              <v-row class="mb-6" no-gutters v-for="item in this.$store.state.cartItems" :key="item.id">
+              <v-row class="large-screen-only mb-6" no-gutters v-for="item in this.$store.state.cartItems" :key="item.id">
                 <v-col align="center">
                   <v-sheet class="pa-2 ma-2">
                     <v-img width="100" :src="item.url" />
+                    <div class="small-screen-only">
+                      {{ item.name }}
+                    </div>
                   </v-sheet>
                 </v-col>
 
-                <v-col>
+                <v-col class="large-screen-only">
                   <v-sheet class="pa-2 ma-2 pt-3">
                     {{ item.name }}
                   </v-sheet>
@@ -81,26 +127,9 @@
           </v-main>
 
         </div>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque, quaerat quasi. Aliquam corporis quod suscipit
-          tenetur libero dicta quo omnis quae, animi pariatur facilis, blanditiis, non velit natus repellendus
-          consequuntur!
-        </p>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque, quaerat quasi. Aliquam corporis quod suscipit
-          tenetur libero dicta quo omnis quae, animi pariatur facilis, blanditiis, non velit natus repellendus
-          consequuntur!
-        </p>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque, quaerat quasi. Aliquam corporis quod suscipit
-          tenetur libero dicta quo omnis quae, animi pariatur facilis, blanditiis, non velit natus repellendus
-          consequuntur!
-        </p>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque, quaerat quasi. Aliquam corporis quod suscipit
-          tenetur libero dicta quo omnis quae, animi pariatur facilis, blanditiis, non velit natus repellendus
-          consequuntur!
-        </p>
       </v-col>
-      <v-col cols="4" sm="4">
-        <div style="position: sticky; top: 120px;">
-
+      <v-col cols="12" sm="4">
+        <div class="ml-2 mr-2" style="position: sticky; top: 120px;">
           <v-sheet min-height="268" color="#eee">
             <template>
               <div class="pa-4">
@@ -117,7 +146,13 @@
                 </v-row>
                 <v-row>
                   <v-col class="pl-4 pr-4" cols="12" md="12">
-                  <v-btn color="green" block class="mt-8 white--text">
+                  <v-btn
+                    class="mt-8 white--text"
+                    color="green"
+                    block
+                    :disabled="cartCount == 0"
+                    @click="paymentIntent"
+                  >
                     CHECKOUT
                   </v-btn>
                 </v-col>
@@ -177,12 +212,26 @@ export default {
       if (item.qty > 0) {
         this.$store.dispatch('substractQtyFromItem', item)
       }
+    },
+    paymentIntent () {
+      this.$store.dispatch('paymentIntent')
+        .catch((_err) => {
+          this.loading = false
+          const show = true
+          const color = 'red darken-3'
+          const text = 'Server Error, try again later!'
+          console.log(_err)
+        })
     }
   }
 }
 </script>
 
 <style scoped>
+td {
+  text-align: center;
+  padding-top: 30px;
+}
 .cart-title {
   font-size: 30px;
 }
@@ -206,5 +255,24 @@ export default {
 .border-bottom {
   border-bottom: 1px solid gray;
 }
+
+.small-screen-only {
+  @media (max-width: 760px) {
+    display: flex;
+  }
+  @media (min-width: 760px) {
+    display: none;
+  }
+}
+
+.large-screen-only {
+  @media (max-width: 760px) {
+    display: none;
+  }
+  @media (min-width: 760px) {
+    display: flex;
+  }
+}
+
 
 </style>

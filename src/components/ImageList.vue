@@ -10,15 +10,12 @@
       just click on it.
     </p>
   <div>
+    <v-row>
+      <v-col>
+        
+      </v-col>
+    </v-row>
     <div class="image-container">
-      <!-- <div
-        v-for="image in filteredImages"
-        v-bind:key="image.id"
-        v-bind:src="image"
-      >
-        <img v-bind:src="image.url" v-bind:key="image.nams"> 
-      </div>  -->
-
       <v-hover v-slot="{ hover }" v-for="image in filteredImages" v-bind:key="image.id">
         <v-card :elevation="0" :class="{ 'on-hover': hover }">
           <v-img class="image" :src="image.url"></v-img>
@@ -40,12 +37,12 @@
       </v-hover>
 
       <v-overlay color="rgba(0,0,0,1)" opacity="0.7" :z-index="zIndex" :value="overlay">
-        <v-card class="mx-auto my-12" width="640">
+        <v-card class="mx-auto my-12 image-overlay" >
           <template slot="progress">
             <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
           </template>
 
-          <v-img :src="this.selectedPhoto">
+          <v-img :src="this.selectedPhoto" class="image">
             <v-btn icon class="visible" style="position:absolute; top:0; right:0;" @click="overlay = false">
               <v-icon size="34">mdi-close</v-icon>
             </v-btn>
@@ -137,9 +134,34 @@ export default {
 </script>
 
 <style scoped>
-.image-container {
-  column-count: 3;
-  column-gap: 0;
+
+@media (min-width: 760px) {
+  .image-container {
+    column-count: 3;
+    column-gap: 0;
+  }
+
+  i.v-icon {
+    font-size: 54px;
+  }
+
+  .image-overlay {
+    width: 640px;
+  }
+}
+
+@media (max-width: 760px) {
+  .image-container {
+    column-count: 2;
+    column-gap: 0;
+  }
+  i.v-icon {
+    font-size: 20px !important;
+  }
+  
+  .image {
+  width: 50vh;
+}
 }
 
 .v-card.v-sheet {

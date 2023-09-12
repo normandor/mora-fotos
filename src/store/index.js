@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Localbase from 'localbase'
 import images from './modules/images';
-
+import axios from 'axios';
+import router from '../router/index'
 let db = new Localbase('db')
 db.config.debug = false;
 
@@ -11,6 +12,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     cartItems: [],
+    secret: {
+      clientSecret: null,
+      tax: 0
+    },
     currentPath: '/',
     appTitle: process.env.VUE_APP_TITLE,
     task: {
@@ -54,7 +59,14 @@ export default new Vuex.Store({
     },
     deleteItem(state, id) {
       state.cartItems = state.cartItems.filter(item => item.id !== id);
-    }
+    },
+    clientSecret(state, payload) {
+      state.secret.clientSecret = payload.clientSecret
+      state.secret.totalAmountInCents = payload.totalAmountInCents
+    },
+    clearCart(state) {
+      state.cartItems = []
+    },
   },
   actions: {
     addCartItem({ commit, dispatch }, newItem) {
@@ -108,6 +120,48 @@ export default new Vuex.Store({
       .then(() => {
         commit('deleteItem', item.id)
       })
-    }
+    },
+    async paymentIntent({ commit, state }) {
+      const res = await axios.post('http://localhost:4242/create-payment-intent/', {
+        user: state.user,
+        cart: state.cart
+      })
+      if (res.status === 201) {
+        console.log('response',res, res.data)
+        commit('clientSecret', {
+          clientSecret: res.data.clientSecret,
+          totalAmountInCents: res.data.totalAmountInCents,
+        })
+        router.push('/checkout')
+      }
+    },
+    async checkout ({ commit, state, getters }, payload) {
+      const res = await axios.post('http://localhost:4242/orders/order/', {
+        order: {
+          // stripe_id: payload.payment_id,
+          // subtotal: getters.subTotal,
+          // total: getters.grandTotal,
+          // tax: state.secret.tax,
+          // cart: state.cart,
+          // rating: state.stars,
+          // first_name: state.user.first_name,
+          // last_name: state.user.last_name,
+          // email: state.user.email,
+          // phone: state.user.phone,
+          // address: state.user.address,
+          // city: state.user.city,
+          // state: state.user.state,
+          // zipcode: state.user.zipcode
+        }
+      })
+      if (res.status === 200) {
+        // Clear the state except for the user
+        commit('clearCart')
+        commit('clientSecret', {
+          clientSecret: null,
+          totalAmountInCents: 0
+        })
+      }
+    },
   },
 })

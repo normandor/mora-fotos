@@ -9,6 +9,9 @@ db.config.debug = false;
 
 Vue.use(Vuex)
 
+const dev = false
+const API_BASE = dev ? 'http://localhost:4242' : 'https://stripe.wichisoft.com.ar'
+
 export default new Vuex.Store({
   state: {
     cartItems: [],
@@ -121,10 +124,10 @@ export default new Vuex.Store({
         commit('deleteItem', item.id)
       })
     },
-    async paymentIntent({ commit, state }) {
-      const res = await axios.post('http://localhost:4242/create-payment-intent/', {
-        user: state.user,
-        cart: state.cart
+    async paymentIntent({ commit }) {
+      console.log(this.state.cartItems)
+      const res = await axios.post(`${API_BASE}/create-payment-intent/`, {
+        cart: this.state.cartItems
       })
       if (res.status === 201) {
         console.log('response',res, res.data)
@@ -136,7 +139,7 @@ export default new Vuex.Store({
       }
     },
     async checkout ({ commit, state, getters }, payload) {
-      const res = await axios.post('http://localhost:4242/orders/order/', {
+      const res = await axios.post(`${API_BASE}/orders/order/`, {
         order: {
           // stripe_id: payload.payment_id,
           // subtotal: getters.subTotal,

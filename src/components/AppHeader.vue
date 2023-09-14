@@ -200,6 +200,16 @@ export default {
 </style>
 
 <style scoped>
+
+.large-screen-only {
+  @media (max-width: 760px) {
+    display: none;
+  }
+  @media (min-width: 760px) {
+    display: flex;
+  }
+}
+
 .bounce-enter-active {
   animation: bounce-in 0.25s;
 }
@@ -230,15 +240,5 @@ export default {
     display: none;
   }
 }
-
-.large-screen-only {
-  @media (max-width: 760px) {
-    display: none;
-  }
-  @media (min-width: 760px) {
-    display: flex;
-  }
-}
-
 
 </style>

@@ -25,13 +25,14 @@
                   </td>
                 </tr>
                 <tr
+                  style="vertical-align: middle;"
                   v-for="item in this.$store.state.cartItems" :key="item.id"
                 >
                 <td>
                   <img :src="item.url" width="100%">
                     {{ item.name }}
                   </td>
-                  <td>
+                  <td style="white-space: nowrap;">
                     <v-btn icon @click="removeOneFromItemList(item)">
                       -
                     </v-btn>
@@ -100,8 +101,8 @@
 
 
                 <v-col align="center">
-                  <v-sheet class="pa-2 ma-2 mr-2 float-right" style="white-space: nowrap;">
-                    <v-btn icon @click="removeOneFromItemList(item)">
+                  <v-sheet class="float-right" style="white-space: nowrap;">
+                    <v-btn style="font-size: 8px;" icon @click="removeOneFromItemList(item)">
                       -
                     </v-btn>
                     {{ item.qty }}
@@ -141,8 +142,8 @@
               <v-container>
 
                 <v-row>
-                  <v-col class="pl-4 pr-4" cols="12" md="6">Items: {{ cartCount }}</v-col>
-                  <v-col align="right" cols="12" md="6">{{ amountSum }} USD</v-col>
+                  <v-col class="pl-4 pr-4" cols="6">Items: {{ cartCount }}</v-col>
+                  <v-col align="right" cols="6">{{ amountSum }} USD</v-col>
                 </v-row>
                 <v-row>
                   <v-col class="pl-4 pr-4" cols="12" md="12">
@@ -236,6 +237,15 @@ td {
   font-size: 30px;
 }
 
+.large-screen-only {
+  @media (max-width: 760px) {
+    display: none;
+  }
+  @media (min-width: 760px) {
+    display: flex;
+  }
+}
+
 .align-right {
   text-align: right;
 }
@@ -259,20 +269,14 @@ td {
 .small-screen-only {
   @media (max-width: 760px) {
     display: flex;
+    .v-btn--icon.v-size--default {
+      width: 16px;
+      height: 16px;
+    }
   }
   @media (min-width: 760px) {
     display: none;
   }
 }
-
-.large-screen-only {
-  @media (max-width: 760px) {
-    display: none;
-  }
-  @media (min-width: 760px) {
-    display: flex;
-  }
-}
-
 
 </style>

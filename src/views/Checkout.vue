@@ -35,15 +35,17 @@
     </v-btn>
   </v-card-actions>
   <p>Note: payments are done via a 3rd party, no information about this payment or credit card is kept in our services.</p>
-  <p>Run in the Stripe Shell
+  <p>
 
-4242 4242 4242 4242
-Payment requires authentication
-
-4000 0025 0000 3155
-Payment is declined
-
-4000 0000 0000 9995</p>
+<br>Tarjetas de test:
+<br>Approbada:
+<br>4242 4242 4242 4242
+<br>
+<br>Requiere autorizacion:
+<br>4000 0025 0000 3155
+<br>
+<br>Declinada:
+<br>4000 0000 0000 9995</p>
       </v-col>
     </v-row>
   </v-container>
@@ -65,6 +67,9 @@ const options = {
 const elements = stripe.elements(options)
 
 const paymentElement = elements.create('payment')
+
+const dev = false
+const WEB_BASE = dev ? 'http://localhost:8080' : 'https://mora-fotos.netlify.app'
 
 export default {
   data() {
@@ -100,7 +105,7 @@ export default {
         elements,
         confirmParams: {
           // return_url: project final route thankyou.vue
-          return_url: 'http://localhost:8080/#/thankyou/',
+          return_url: `${WEB_BASE}/#/thankyou/`,
           shipping: {
             address: {
               city: this.city,

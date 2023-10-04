@@ -221,7 +221,6 @@ export default {
           const show = true
           const color = 'red darken-3'
           const text = 'Server Error, try again later!'
-          console.log(_err)
         })
     }
   }

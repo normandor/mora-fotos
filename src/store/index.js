@@ -21,10 +21,8 @@ export default new Vuex.Store({
     },
     currentPath: '/',
     appTitle: process.env.VUE_APP_TITLE,
-    task: {
-      id: null,
-      dueDate: null
-    },
+    id: null,
+    selectedDate: null,
     headerImage: '2.jpg'
   },
   modules: {
@@ -44,11 +42,11 @@ export default new Vuex.Store({
     setCartItems(state, items) {
       state.cartItems = items
     },
-    updateTaskDueDate(state, payload) {
-      state.task.dueDate = payload
-    },
     setHeaderImage(state, value) {
       state.headerImage = value
+    },    
+    setSelectedDate(state, value) {
+      state.selectedDate = value
     },
     setSearch(state, value) {
       state.search = value
@@ -79,16 +77,17 @@ export default new Vuex.Store({
       // console.log('newItem', newItem)
       // console.log('existingItem', existingItem)
       if (existingItem.length === 0) {
-        console.log('adding new', newItem)
       
         db.collection('cart').add(newItem)
         .then(() => {
           commit('addCartItem', newItem)
         })
       } else {
-        console.log('existing item', existingItem[0])
         dispatch('addQtyToItem', existingItem[0])
       }      
+    },
+    setSelectedDate({ commit }, value) {
+      commit('setSelectedDate', value != '' ? value : null)
     },
     setHeaderImage({ commit }, value) {
       commit('setHeaderImage', value)
@@ -110,7 +109,6 @@ export default new Vuex.Store({
       });
     },
     substractQtyFromItem({ commit }, payload) {
-      console.log('substracting', payload)
       payload.qty--
       db.collection('cart').doc({ id: payload.id}).update({
         qty: payload.qty
@@ -125,12 +123,10 @@ export default new Vuex.Store({
       })
     },
     async paymentIntent({ commit }) {
-      console.log(this.state.cartItems)
       const res = await axios.post(`${API_BASE}/create-payment-intent/`, {
         cart: this.state.cartItems
       })
       if (res.status === 201) {
-        console.log('response',res, res.data)
         commit('clientSecret', {
           clientSecret: res.data.clientSecret,
           totalAmountInCents: res.data.totalAmountInCents,

@@ -14,11 +14,6 @@ import { format } from 'date-fns';
 export default {
   data: () => ({
     date: null,
-    dialogs: {
-      edit: false,
-      delete: false,
-      dueDate: true
-    },
     items: [
       { title: 'Todo', icon: 'mdi-format-list-checks', to: '/' },
       { title: 'About', icon: 'mdi-help-box', to: '/about' },
@@ -26,14 +21,14 @@ export default {
     scrollPosition: null
   }),
   computed: {
-    dueDate() {
-      return this.$store.state.task.dueDate
+    selectedDate() {
+      return this.$store.state.selectedDate
     }
   },
   mounted() {
-    if (!this.$store.state.task.dueDate) {
-      this.$store.state.task.dueDate = null // format(new Date(), 'yyyy-MM-dd');
-      this.date = this.$store.state.task.dueDate
+    if (!this.$store.state.selectedDate) {
+      this.$store.state.selectedDate = null // format(new Date(), 'yyyy-MM-dd');
+      this.date = this.$store.state.selectedDate
     }
     this.$store.dispatch('getItems')
   },
@@ -43,7 +38,6 @@ export default {
     }
   },
   components: {
-    'dialog-due-date': require('@/components/Todo/Dialogs/DialogDueDate.vue').default,
     'app-header': require('@/components/AppHeader.vue').default,
     'app-footer': require('@/components/AppFooter.vue').default,
   }

@@ -35,12 +35,12 @@ export default {
   computed: {
     ...mapGetters(['allImages']),
     filteredImages() {
-      if (!this.$store.state.task.dueDate) {
+      if (!this.$store.state.selectedDate) {
         return this.allImages;
       }
 
       return this.allImages.filter(image => {
-        return image.date === this.$store.state.task.dueDate
+        return image.date === this.$store.state.selectedDate
       })
     }
   },

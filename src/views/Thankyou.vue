@@ -26,7 +26,6 @@ export default {
         clientSecret
       )
       if (error) {
-        console.log(error)
         this.message = 'An error has ocurred'
       }
       if (paymentIntent.status === 'succeeded') {
@@ -38,7 +37,6 @@ export default {
             const show = true
             const color = 'red darken-3'
             const text = 'An error has ocurred'
-            console.log(text, _err)
           })
       } else {
         this.message = paymentIntent.status

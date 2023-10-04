@@ -130,7 +130,6 @@ export default {
       //event.target.classList.toggle('active')
 
       if (this.lastEvent) {
-        console.log(this.lastEvent.target.classList)
         // this.lastEvent.target.classList.toggle('active')
       }
 
@@ -148,7 +147,6 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.updateScroll);
-    //this.$store.dispatch('getTasks');
   },
   computed: {
     cartCount() {

@@ -81,7 +81,7 @@ const actions = {
         id: 7,
         url: '7.jpg',
         name: 'photo7',
-        date: '2023-09-04',
+        date: '2023-10-04',
         price: 5,
         currency: 'USD',
         qty: 1
@@ -90,7 +90,7 @@ const actions = {
         id: 8,
         url: '8.jpg',
         name: 'photo8',
-        date: '2023-09-03',
+        date: '2023-10-04',
         price: 5,
         currency: 'USD',
         qty: 1

@@ -5,13 +5,13 @@
         <v-col
           v-for="item in docs"
           :key="item.title"
-          cols="4"
+          cols="12" md="6"
         >
           <div class="feature-title">
             {{ item.title }}
           </div>
             <div class="feature-text">
-              {{ item.text }}
+              {{ item.text }}<br>&nbsp;
             </div>
         </v-col>
       </v-row>
